@@ -41,6 +41,40 @@ async def root():
     return {"message": msg}
 
 
+from fastapi import BackgroundTasks
+from datetime import datetime, timedelta
+from functools import partial
+import time
+
+container = dict()
+
+def update_timeout(key):
+    container[key] = datetime.now()
+    dt = 10
+    time.sleep(dt)
+    now = datetime.now()
+    record = container.get(key)
+    print(record)
+    if isinstance(record, datetime) and (now - container[key] >= timedelta(seconds=dt)):
+        container[key] = 'expired'
+        print(key, 'expired')
+
+
+@app.post('/timer')
+def create_timer(key: str, background_tasks: BackgroundTasks):
+    background_tasks.add_task(partial(update_timeout, key))
+    return datetime.now().strftime('%H:%m:%S.%f')[:-2]
+
+
+@app.get('/timer')
+def get_timer(key: str):
+    res = container.get(key)
+    if isinstance(res, datetime):
+        return (res - datetime.now()).total_seconds()
+    else:
+        return res
+
+
 def main():
     import uvicorn
     uvicorn.run(app, host=os.getenv('WS_HOST', '127.0.0.1'), port=int(os.getenv('WS_PORT', '8000')))
