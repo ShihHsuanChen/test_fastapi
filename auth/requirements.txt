@@ -1,0 +1,5 @@
+fastapi-users[sqlalchemy]
+aiosqlite
+casbin
+casbin_sqlalchemy_adapter
+fastapi-authz
