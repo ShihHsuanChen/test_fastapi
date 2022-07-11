@@ -51,4 +51,17 @@ async def get_two_somethings(
     return {"one": one, "two": two}
 
 
+sub_router = APIRouter()
+
+@sub_router.get("/foo")
+async def get_foo():
+    return 'foo'
+
+
+@sub_router.get("/goo")
+async def get_goo():
+    return 'goo'
+
+router.include_router(sub_router, prefix='/sub')
+
 app.include_router(router)
