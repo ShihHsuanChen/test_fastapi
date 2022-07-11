@@ -10,8 +10,6 @@ from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import sessionmaker, Session
 from sqlalchemy import create_engine
 
-from .schemas import UserCreate
-
 
 DATABASE_URL_ASYNC = "sqlite+aiosqlite:///./test.db"
 DATABASE_URL = "sqlite:///./test.db?check_same_thread=False"
