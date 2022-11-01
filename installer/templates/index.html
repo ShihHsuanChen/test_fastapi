@@ -1,0 +1,81 @@
+<!-- DOCTYPE=html -->
+<html>
+  <head></head>
+  <body>
+    <h1>Hello</h1>
+    <a href=https://api.video/blog/tutorials/uploading-large-files-with-javascript>
+      https://api.video/blog/tutorials/uploading-large-files-with-javascript
+    </a><br>
+    <a href=https://codepen.io/PerfectIsShit/pen/zogMXP>
+      https://codepen.io/PerfectIsShit/pen/zogMXP
+    </a><br>
+    <input type="file" id="file-selector">
+    <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
+    <h3 id="status"></h3>
+    <p id="loaded_n_total"></p>
+
+    <script>
+      const fileSelector = document.getElementById('file-selector');
+
+      fileSelector.addEventListener('change', (event) => {
+        const f = event.target.files[0];
+        console.log(f);
+        uploadFile(f)
+      });
+
+      function uploadFile(file) {
+        // https://codepen.io/PerfectIsShit/pen/zogMXP
+        var formdata = new FormData();
+        formdata.append("f", file);
+        var ajax = new XMLHttpRequest();
+
+        function progressHandler(event) {
+          document.getElementById("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
+          var percent = (event.loaded / event.total) * 100;
+          document.getElementById("progressBar").value = Math.round(percent);
+          document.getElementById("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
+        }
+
+        function completeHandler(event) {
+          document.getElementById("status").innerHTML = event.target.responseText;
+          document.getElementById("progressBar").value = 0; //wil clear progress bar after successful upload
+        }
+
+        function errorHandler(event) {
+          document.getElementById("status").innerHTML = "Upload Failed";
+        }
+
+        function abortHandler(event) {
+          document.getElementById("status").innerHTML = "Upload Aborted";
+        }
+        ajax.upload.addEventListener("progress", progressHandler, false);
+        ajax.addEventListener("load", completeHandler, false);
+        ajax.addEventListener("error", errorHandler, false);
+        ajax.addEventListener("abort", abortHandler, false);
+        ajax.open("POST", "/upload/");
+        ajax.send(formdata);
+      }
+      // read file with out upload to server
+      function readFile(file) {
+        const reader = new FileReader();
+        reader.addEventListener('load', (event) => {
+          const result = event.target.result;
+          // Do something with result
+          console.log('load')
+        });
+
+        reader.addEventListener('progress', (event) => {
+          console.log(event)
+          if (event.loaded && event.total) {
+            const percent = (event.loaded / event.total) * 100;
+            console.log(`Progress: ${Math.round(percent)}`);
+            //event.currentTarget.
+          }
+        });
+        reader.readAsDataURL(file);
+      }
+    </script>
+  </body>
+</html>
+
+

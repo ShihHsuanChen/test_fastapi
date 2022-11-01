@@ -1,0 +1,8 @@
+commands:
+    fastapiApp:
+        executable: pyinstaller
+        equalstr: False
+        positional:
+            # - "--hidden-import "
+            - "--add-data templates/*;./templates/"
+            - main.py
