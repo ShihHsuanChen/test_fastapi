@@ -1,8 +1,16 @@
+# build requirement config2cmd (https://github.com/ShihHsuanChen/cmd_config)
+# build dist:  config2cmd build-compose.yml -e env.cfg --run build
+# build setup: config2cmd build-compose.yml -e env.cfg --run build_setup
+
 commands:
-    fastapiApp:
+    build:
         executable: pyinstaller
         equalstr: False
         positional:
-            # - "--hidden-import "
             - "--add-data templates/*;./templates/"
             - main.py
+
+    build_setup:
+        executable: iscc
+        positional:
+            - build_setup.iss
