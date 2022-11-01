@@ -5,3 +5,4 @@ dist/*
 *.db
 */dist/*
 */build/*
+*/dist_wizard/*
