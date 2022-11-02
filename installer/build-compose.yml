@@ -6,6 +6,8 @@ commands:
     build:
         executable: pyinstaller
         equalstr: False
+        optional:
+            name: webuploader
         positional:
             - "--add-data templates/*;./templates/"
             - main.py
