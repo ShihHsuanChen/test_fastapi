@@ -1,0 +1,20 @@
+{
+  "name": "simpleproj",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --emptyOutDir",
+    "preview": "vite preview --port 5050",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "vue": "^3.2.27"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.1",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "vite": "^2.7.13"
+  }
+}
